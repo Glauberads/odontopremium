@@ -170,27 +170,38 @@
     min-width: 44px;
   }
 
-  /* ===== Sidebar Neon Icon Effect ===== */
+  /* ===== Sidebar Neon Icon System (Multi-Color) ===== */
+
+  /* Color variants — set the neon color per menu item */
+  .neon-blue    { --neon-color: #0ea5e9; }   /* Primary / Início */
+  .neon-green   { --neon-color: #3ecf8e; }   /* Secondary / Agenda */
+  .neon-orange  { --neon-color: #ff7a00; }   /* Cadastros */
+  .neon-gold    { --neon-color: #eab308; }   /* Financeiro */
+  .neon-purple  { --neon-color: #a855f7; }   /* Pagamentos */
+  .neon-teal    { --neon-color: #14b8a6; }   /* Utilitários */
+  .neon-rose    { --neon-color: #f43f5e; }   /* Configurações */
+
+  /* Main menu icons */
   .sidebar-neon-icon {
-    color: #ff7a00;
-    filter: drop-shadow(0 0 8px #ff7a00);
+    color: var(--neon-color);
+    filter: drop-shadow(0 0 8px var(--neon-color));
     transition: all 0.3s ease;
   }
 
   /* Intensified neon glow on parent hover */
   .sidebar-neon-item:hover .sidebar-neon-icon {
-    filter: drop-shadow(0 0 12px #ff7a00) drop-shadow(0 0 20px #ff7a00);
+    filter: drop-shadow(0 0 12px var(--neon-color)) drop-shadow(0 0 20px var(--neon-color));
   }
 
-  /* Submenu icons - slightly smaller glow */
+  /* Submenu icons — slightly smaller glow */
   .sidebar-neon-sub-icon {
-    color: #ff7a00;
-    filter: drop-shadow(0 0 6px #ff7a00);
+    color: var(--neon-color);
+    filter: drop-shadow(0 0 6px var(--neon-color));
     transition: all 0.3s ease;
   }
 
   .sidebar-neon-sub-item:hover .sidebar-neon-sub-icon {
-    filter: drop-shadow(0 0 10px #ff7a00) drop-shadow(0 0 16px #ff7a00);
+    filter: drop-shadow(0 0 10px var(--neon-color)) drop-shadow(0 0 16px var(--neon-color));
   }
 }
 

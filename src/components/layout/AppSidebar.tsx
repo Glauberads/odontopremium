@@ -186,7 +186,7 @@ export function AppSidebar() {
             <SidebarMenu>
               {menuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild className="sidebar-neon-item">
+                  <SidebarMenuButton asChild className="sidebar-neon-item neon-blue">
                     <NavLink to={item.url} end className={getNavClass}>
                       <item.icon className="w-4 h-4 sidebar-neon-icon" />
                       {!isCollapsed && <span>{item.title}</span>}
@@ -197,7 +197,7 @@ export function AppSidebar() {
 
               {/* Agenda */}
               <SidebarMenuItem>
-                <SidebarMenuButton asChild className="sidebar-neon-item">
+                <SidebarMenuButton asChild className="sidebar-neon-item neon-green">
                   <NavLink to="/appointments" end className={getNavClass}>
                     <Calendar className="w-4 h-4 sidebar-neon-icon" />
                     {!isCollapsed && <span>Agenda</span>}
@@ -209,7 +209,7 @@ export function AppSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton
                   onClick={() => setIsCadastroOpen(!isCadastroOpen)}
-                  className={`${getParentNavClass(isCadastroActive)} sidebar-neon-item`}
+                  className={`${getParentNavClass(isCadastroActive)} sidebar-neon-item neon-orange`}
                 >
                   <Users className="w-4 h-4 sidebar-neon-icon" />
                   {!isCollapsed && (
@@ -228,7 +228,7 @@ export function AppSidebar() {
                 {isCadastroOpen && !isCollapsed && (
                   <SidebarMenuSub>
                     {cadastroItems.map((item) => (
-                      <SidebarMenuSubItem key={item.title} className="sidebar-neon-sub-item">
+                      <SidebarMenuSubItem key={item.title} className="sidebar-neon-sub-item neon-orange">
                         <SidebarMenuSubButton asChild isActive={isActive(item.url)}>
                           <NavLink to={item.url} end>
                             <item.icon className="w-3 h-3 sidebar-neon-sub-icon" />
@@ -245,7 +245,7 @@ export function AppSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton
                   onClick={() => setIsFinanceiroOpen(!isFinanceiroOpen)}
-                  className={`${getParentNavClass(isFinanceiroActive)} sidebar-neon-item`}
+                  className={`${getParentNavClass(isFinanceiroActive)} sidebar-neon-item neon-gold`}
                 >
                   <DollarSign className="w-4 h-4 sidebar-neon-icon" />
                   {!isCollapsed && (
@@ -264,7 +264,7 @@ export function AppSidebar() {
                 {isFinanceiroOpen && !isCollapsed && (
                   <SidebarMenuSub>
                     {financeiroItems.map((item) => (
-                      <SidebarMenuSubItem key={item.title} className="sidebar-neon-sub-item">
+                      <SidebarMenuSubItem key={item.title} className="sidebar-neon-sub-item neon-gold">
                         <SidebarMenuSubButton asChild isActive={isActive(item.url)}>
                           <NavLink to={item.url} end>
                             <item.icon className="w-3 h-3 sidebar-neon-sub-icon" />
@@ -283,7 +283,7 @@ export function AppSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton
                   onClick={() => setIsPagamentosOpen(!isPagamentosOpen)}
-                  className={`${getParentNavClass(isPagamentosActive)} sidebar-neon-item`}
+                  className={`${getParentNavClass(isPagamentosActive)} sidebar-neon-item neon-purple`}
                 >
                   <CreditCard className="w-4 h-4 sidebar-neon-icon" />
                   {!isCollapsed && (
@@ -302,7 +302,7 @@ export function AppSidebar() {
                 {isPagamentosOpen && !isCollapsed && (
                   <SidebarMenuSub>
                     {pagamentosItems.map((item) => (
-                      <SidebarMenuSubItem key={item.title} className="sidebar-neon-sub-item">
+                      <SidebarMenuSubItem key={item.title} className="sidebar-neon-sub-item neon-purple">
                         <SidebarMenuSubButton asChild isActive={isActive(item.url)}>
                           <NavLink to={item.url} end>
                             <item.icon className="w-3 h-3 sidebar-neon-sub-icon" />
@@ -319,7 +319,7 @@ export function AppSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton
                   onClick={() => setIsUtilitariosOpen(!isUtilitariosOpen)}
-                  className={`${getParentNavClass(isUtilitariosActive)} sidebar-neon-item`}
+                  className={`${getParentNavClass(isUtilitariosActive)} sidebar-neon-item neon-teal`}
                 >
                   <Wrench className="w-4 h-4 sidebar-neon-icon" />
                   {!isCollapsed && (
@@ -338,7 +338,7 @@ export function AppSidebar() {
                 {isUtilitariosOpen && !isCollapsed && (
                   <SidebarMenuSub>
                     {utilitariosItems.map((item) => (
-                      <SidebarMenuSubItem key={item.title} className="sidebar-neon-sub-item">
+                      <SidebarMenuSubItem key={item.title} className="sidebar-neon-sub-item neon-teal">
                         <SidebarMenuSubButton asChild isActive={isActive(item.url)}>
                           <NavLink to={item.url} end>
                             <item.icon className="w-3 h-3 sidebar-neon-sub-icon" />
@@ -355,7 +355,7 @@ export function AppSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton
                   onClick={() => setIsConfiguracoesOpen(!isConfiguracoesOpen)}
-                  className={`${getParentNavClass(isConfiguracoesActive)} sidebar-neon-item`}
+                  className={`${getParentNavClass(isConfiguracoesActive)} sidebar-neon-item neon-rose`}
                 >
                   <Settings className="w-4 h-4 sidebar-neon-icon" />
                   {!isCollapsed && (
@@ -374,7 +374,7 @@ export function AppSidebar() {
                 {isConfiguracoesOpen && !isCollapsed && (
                   <SidebarMenuSub>
                     {configuracoesItems.map((item) => (
-                      <SidebarMenuSubItem key={item.title} className="sidebar-neon-sub-item">
+                      <SidebarMenuSubItem key={item.title} className="sidebar-neon-sub-item neon-rose">
                         <SidebarMenuSubButton asChild isActive={isActive(item.url)}>
                           <NavLink to={item.url} end>
                             <item.icon className="w-3 h-3 sidebar-neon-sub-icon" />
