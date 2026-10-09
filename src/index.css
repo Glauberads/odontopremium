@@ -169,6 +169,29 @@
     min-height: 44px;
     min-width: 44px;
   }
+
+  /* ===== Sidebar Neon Icon Effect ===== */
+  .sidebar-neon-icon {
+    color: #ff7a00;
+    filter: drop-shadow(0 0 8px #ff7a00);
+    transition: all 0.3s ease;
+  }
+
+  /* Intensified neon glow on parent hover */
+  .sidebar-neon-item:hover .sidebar-neon-icon {
+    filter: drop-shadow(0 0 12px #ff7a00) drop-shadow(0 0 20px #ff7a00);
+  }
+
+  /* Submenu icons - slightly smaller glow */
+  .sidebar-neon-sub-icon {
+    color: #ff7a00;
+    filter: drop-shadow(0 0 6px #ff7a00);
+    transition: all 0.3s ease;
+  }
+
+  .sidebar-neon-sub-item:hover .sidebar-neon-sub-icon {
+    filter: drop-shadow(0 0 10px #ff7a00) drop-shadow(0 0 16px #ff7a00);
+  }
 }
 
 /* Custom mobile responsiveness */

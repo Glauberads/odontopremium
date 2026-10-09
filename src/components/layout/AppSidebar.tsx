@@ -186,9 +186,9 @@ export function AppSidebar() {
             <SidebarMenu>
               {menuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild className="sidebar-neon-item">
                     <NavLink to={item.url} end className={getNavClass}>
-                      <item.icon className="w-4 h-4" />
+                      <item.icon className="w-4 h-4 sidebar-neon-icon" />
                       {!isCollapsed && <span>{item.title}</span>}
                     </NavLink>
                   </SidebarMenuButton>
@@ -197,9 +197,9 @@ export function AppSidebar() {
 
               {/* Agenda */}
               <SidebarMenuItem>
-                <SidebarMenuButton asChild>
+                <SidebarMenuButton asChild className="sidebar-neon-item">
                   <NavLink to="/appointments" end className={getNavClass}>
-                    <Calendar className="w-4 h-4" />
+                    <Calendar className="w-4 h-4 sidebar-neon-icon" />
                     {!isCollapsed && <span>Agenda</span>}
                   </NavLink>
                 </SidebarMenuButton>
@@ -209,12 +209,12 @@ export function AppSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton
                   onClick={() => setIsCadastroOpen(!isCadastroOpen)}
-                  className={getParentNavClass(isCadastroActive)}
+                  className={`${getParentNavClass(isCadastroActive)} sidebar-neon-item`}
                 >
-                  <Users className={isCadastroActive ? "w-4 h-4 text-primary" : "w-4 h-4"} />
+                  <Users className="w-4 h-4 sidebar-neon-icon" />
                   {!isCollapsed && (
                     <>
-                      <span className={isCadastroActive ? "text-primary" : undefined}>Cadastros</span>
+                      <span>Cadastros</span>
                       {isCadastroOpen ? (
                         <ChevronDown className="w-4 h-4 ml-auto" />
                       ) : (
@@ -228,10 +228,10 @@ export function AppSidebar() {
                 {isCadastroOpen && !isCollapsed && (
                   <SidebarMenuSub>
                     {cadastroItems.map((item) => (
-                      <SidebarMenuSubItem key={item.title}>
+                      <SidebarMenuSubItem key={item.title} className="sidebar-neon-sub-item">
                         <SidebarMenuSubButton asChild isActive={isActive(item.url)}>
                           <NavLink to={item.url} end>
-                            <item.icon className="w-3 h-3" />
+                            <item.icon className="w-3 h-3 sidebar-neon-sub-icon" />
                             <span>{item.title}</span>
                           </NavLink>
                         </SidebarMenuSubButton>
@@ -245,12 +245,12 @@ export function AppSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton
                   onClick={() => setIsFinanceiroOpen(!isFinanceiroOpen)}
-                  className={getParentNavClass(isFinanceiroActive)}
+                  className={`${getParentNavClass(isFinanceiroActive)} sidebar-neon-item`}
                 >
-                  <DollarSign className={isFinanceiroActive ? "w-4 h-4 text-primary" : "w-4 h-4"} />
+                  <DollarSign className="w-4 h-4 sidebar-neon-icon" />
                   {!isCollapsed && (
                     <>
-                      <span className={isFinanceiroActive ? "text-primary" : undefined}>Financeiro</span>
+                      <span>Financeiro</span>
                       {isFinanceiroOpen ? (
                         <ChevronDown className="w-4 h-4 ml-auto" />
                       ) : (
@@ -264,10 +264,10 @@ export function AppSidebar() {
                 {isFinanceiroOpen && !isCollapsed && (
                   <SidebarMenuSub>
                     {financeiroItems.map((item) => (
-                      <SidebarMenuSubItem key={item.title}>
+                      <SidebarMenuSubItem key={item.title} className="sidebar-neon-sub-item">
                         <SidebarMenuSubButton asChild isActive={isActive(item.url)}>
                           <NavLink to={item.url} end>
-                            <item.icon className="w-3 h-3" />
+                            <item.icon className="w-3 h-3 sidebar-neon-sub-icon" />
                             <span>{item.title}</span>
                           </NavLink>
                         </SidebarMenuSubButton>
@@ -283,12 +283,12 @@ export function AppSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton
                   onClick={() => setIsPagamentosOpen(!isPagamentosOpen)}
-                  className={getParentNavClass(isPagamentosActive)}
+                  className={`${getParentNavClass(isPagamentosActive)} sidebar-neon-item`}
                 >
-                  <CreditCard className={isPagamentosActive ? "w-4 h-4 text-primary" : "w-4 h-4"} />
+                  <CreditCard className="w-4 h-4 sidebar-neon-icon" />
                   {!isCollapsed && (
                     <>
-                      <span className={isPagamentosActive ? "text-primary" : undefined}>Pagamentos</span>
+                      <span>Pagamentos</span>
                       {isPagamentosOpen ? (
                         <ChevronDown className="w-4 h-4 ml-auto" />
                       ) : (
@@ -302,10 +302,10 @@ export function AppSidebar() {
                 {isPagamentosOpen && !isCollapsed && (
                   <SidebarMenuSub>
                     {pagamentosItems.map((item) => (
-                      <SidebarMenuSubItem key={item.title}>
+                      <SidebarMenuSubItem key={item.title} className="sidebar-neon-sub-item">
                         <SidebarMenuSubButton asChild isActive={isActive(item.url)}>
                           <NavLink to={item.url} end>
-                            <item.icon className="w-3 h-3" />
+                            <item.icon className="w-3 h-3 sidebar-neon-sub-icon" />
                             <span>{item.title}</span>
                           </NavLink>
                         </SidebarMenuSubButton>
@@ -319,12 +319,12 @@ export function AppSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton
                   onClick={() => setIsUtilitariosOpen(!isUtilitariosOpen)}
-                  className={getParentNavClass(isUtilitariosActive)}
+                  className={`${getParentNavClass(isUtilitariosActive)} sidebar-neon-item`}
                 >
-                  <Wrench className={isUtilitariosActive ? "w-4 h-4 text-primary" : "w-4 h-4"} />
+                  <Wrench className="w-4 h-4 sidebar-neon-icon" />
                   {!isCollapsed && (
                     <>
-                      <span className={isUtilitariosActive ? "text-primary" : undefined}>Utilitários</span>
+                      <span>Utilitários</span>
                       {isUtilitariosOpen ? (
                         <ChevronDown className="w-4 h-4 ml-auto" />
                       ) : (
@@ -338,10 +338,10 @@ export function AppSidebar() {
                 {isUtilitariosOpen && !isCollapsed && (
                   <SidebarMenuSub>
                     {utilitariosItems.map((item) => (
-                      <SidebarMenuSubItem key={item.title}>
+                      <SidebarMenuSubItem key={item.title} className="sidebar-neon-sub-item">
                         <SidebarMenuSubButton asChild isActive={isActive(item.url)}>
                           <NavLink to={item.url} end>
-                            <item.icon className="w-3 h-3" />
+                            <item.icon className="w-3 h-3 sidebar-neon-sub-icon" />
                             <span>{item.title}</span>
                           </NavLink>
                         </SidebarMenuSubButton>
@@ -355,12 +355,12 @@ export function AppSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton
                   onClick={() => setIsConfiguracoesOpen(!isConfiguracoesOpen)}
-                  className={getParentNavClass(isConfiguracoesActive)}
+                  className={`${getParentNavClass(isConfiguracoesActive)} sidebar-neon-item`}
                 >
-                  <Settings className={isConfiguracoesActive ? "w-4 h-4 text-primary" : "w-4 h-4"} />
+                  <Settings className="w-4 h-4 sidebar-neon-icon" />
                   {!isCollapsed && (
                     <>
-                      <span className={isConfiguracoesActive ? "text-primary" : undefined}>Configurações</span>
+                      <span>Configurações</span>
                       {isConfiguracoesOpen ? (
                         <ChevronDown className="w-4 h-4 ml-auto" />
                       ) : (
@@ -374,10 +374,10 @@ export function AppSidebar() {
                 {isConfiguracoesOpen && !isCollapsed && (
                   <SidebarMenuSub>
                     {configuracoesItems.map((item) => (
-                      <SidebarMenuSubItem key={item.title}>
+                      <SidebarMenuSubItem key={item.title} className="sidebar-neon-sub-item">
                         <SidebarMenuSubButton asChild isActive={isActive(item.url)}>
                           <NavLink to={item.url} end>
-                            <item.icon className="w-3 h-3" />
+                            <item.icon className="w-3 h-3 sidebar-neon-sub-icon" />
                             <span>{item.title}</span>
                           </NavLink>
                         </SidebarMenuSubButton>
