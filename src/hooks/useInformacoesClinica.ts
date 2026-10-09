@@ -21,6 +21,9 @@ export interface InformacoesClinica {
   cep: string;
   logo_base64?: string;
   observacoes?: string;
+  seo_title?: string;
+  seo_description?: string;
+  seo_keywords?: string;
   created_at: string;
   updated_at: string;
 }

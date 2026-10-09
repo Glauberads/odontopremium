@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Building2, Save, Plus, Trash2, Clock } from "lucide-react";
+import { Building2, Save, Plus, Trash2, Clock, Search } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { useInformacoesClinica } from "@/hooks/useInformacoesClinica";
 import { useHorariosDisponiveis } from "@/hooks/useHorariosDisponiveis";
@@ -49,6 +49,9 @@ export function InformacoesClinica() {
     cep: "",
     logo_base64: "",
     observacoes: "",
+    seo_title: "",
+    seo_description: "",
+    seo_keywords: "",
   });
 
   const [novoHorario, setNovoHorario] = useState({
@@ -76,6 +79,9 @@ export function InformacoesClinica() {
         cep: informacoes.cep || "",
         logo_base64: informacoes.logo_base64 || "",
         observacoes: informacoes.observacoes || "",
+        seo_title: informacoes.seo_title || "",
+        seo_description: informacoes.seo_description || "",
+        seo_keywords: informacoes.seo_keywords || "",
       });
     }
   }, [informacoes]);
@@ -452,6 +458,54 @@ export function InformacoesClinica() {
                   rows={4}
                   placeholder="Informações adicionais sobre a clínica..."
                 />
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* SEO (Otimização para Buscadores) */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Search className="h-5 w-5" />
+                SEO (Otimização de Buscas)
+              </CardTitle>
+              <CardDescription>
+                Configure como a sua clínica aparecerá no Google e quando o link for compartilhado
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="seo_title">Título da Página (Meta Title)</Label>
+                <Input
+                  id="seo_title"
+                  value={formData.seo_title}
+                  onChange={(e) => handleChange("seo_title", e.target.value)}
+                  placeholder="Ex: Odonto PRO - Sistema Odontológico"
+                />
+                <p className="text-xs text-muted-foreground">O título principal que aparece na aba do navegador e nos resultados do Google.</p>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="seo_description">Descrição (Meta Description)</Label>
+                <Textarea
+                  id="seo_description"
+                  value={formData.seo_description}
+                  onChange={(e) => handleChange("seo_description", e.target.value)}
+                  rows={2}
+                  placeholder="Ex: A melhor clínica odontológica da cidade com especialistas em implantes e ortodontia..."
+                />
+                <p className="text-xs text-muted-foreground">Um breve resumo sobre a clínica. Aparece logo abaixo do link no Google.</p>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="seo_keywords">Palavras-chave (Keywords)</Label>
+                <Input
+                  id="seo_keywords"
+                  value={formData.seo_keywords}
+                  onChange={(e) => handleChange("seo_keywords", e.target.value)}
+                  placeholder="Ex: dentista, clínica odontológica, implantes, clareamento dental"
+                />
+                <p className="text-xs text-muted-foreground">Palavras separadas por vírgula que ajudam a identificar o seu negócio.</p>
               </div>
             </CardContent>
           </Card>
