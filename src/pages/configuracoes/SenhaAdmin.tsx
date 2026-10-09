@@ -8,7 +8,8 @@ import { Badge } from "@/components/ui/badge";
 import { MobileTable } from "@/components/ui/mobile-table";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { Lock, Eye, EyeOff, CheckCircle, AlertCircle, Shield, Key, Loader2, UserPlus } from "lucide-react";
+import { Lock, Eye, EyeOff, CheckCircle, AlertCircle, Shield, Key, Loader2, UserPlus, Trash2, Users } from "lucide-react";
+import { useEffect } from "react";
 
 export function SenhaAdmin() {
   const { toast } = useToast();
@@ -25,6 +26,34 @@ export function SenhaAdmin() {
   const [novoAdminSenha, setNovoAdminSenha] = useState("");
   const [mostrarNovoAdminSenha, setMostrarNovoAdminSenha] = useState(false);
   const [isCadastrando, setIsCadastrando] = useState(false);
+
+  // Lista de Admins
+  const [admins, setAdmins] = useState<any[]>([]);
+  const [isLoadingAdmins, setIsLoadingAdmins] = useState(true);
+  const [currentUserId, setCurrentUserId] = useState<string>("");
+
+  const fetchAdmins = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) setCurrentUserId(user.id);
+
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      setAdmins(data || []);
+    } catch (error) {
+      console.error("Erro ao carregar administradores:", error);
+    } finally {
+      setIsLoadingAdmins(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchAdmins();
+  }, []);
 
   const verificarForcaSenha = (senha: string) => {
     let pontuacao = 0;
@@ -167,6 +196,7 @@ export function SenhaAdmin() {
 
       setNovoAdminEmail("");
       setNovoAdminSenha("");
+      fetchAdmins(); // Recarrega a lista após cadastrar
     } catch (error: any) {
       toast({
         title: "Erro ao cadastrar",
@@ -175,6 +205,37 @@ export function SenhaAdmin() {
       });
     } finally {
       setIsCadastrando(false);
+    }
+  };
+
+  const handleRemoverAdmin = async (userId: string) => {
+    if (userId === currentUserId) {
+      toast({
+        title: "Ação não permitida",
+        description: "Você não pode remover a si mesmo.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!confirm("Tem certeza que deseja remover este administrador? O acesso será revogado na mesma hora.")) return;
+
+    try {
+      const { error } = await supabase.rpc('delete_user', { user_id_to_delete: userId });
+      if (error) throw error;
+
+      toast({
+        title: "Administrador removido",
+        description: "A conta foi excluída com sucesso.",
+      });
+      
+      fetchAdmins(); // Recarrega a lista
+    } catch (error: any) {
+      toast({
+        title: "Erro ao remover",
+        description: error.message || "Não foi possível remover o administrador.",
+        variant: "destructive",
+      });
     }
   };
 
@@ -420,6 +481,54 @@ export function SenhaAdmin() {
                     </>
                   )}
                 </Button>
+              </CardContent>
+            </Card>
+
+            {/* Gerenciar Administradores */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Users className="w-5 h-5" />
+                  Gerenciar Administradores
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                {isLoadingAdmins ? (
+                  <div className="flex justify-center p-4">
+                    <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+                  </div>
+                ) : admins.length === 0 ? (
+                  <p className="text-center text-muted-foreground p-4">Nenhum administrador encontrado.</p>
+                ) : (
+                  <div className="space-y-4">
+                    {admins.map((admin) => (
+                      <div key={admin.id} className="flex items-center justify-between p-3 border rounded-lg bg-card/50">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary">
+                            {admin.nome_exibicao ? admin.nome_exibicao.charAt(0).toUpperCase() : 'A'}
+                          </div>
+                          <div>
+                            <p className="font-medium text-sm">{admin.nome_exibicao || "Sem nome"}</p>
+                            <p className="text-xs text-muted-foreground">
+                              {admin.user_id === currentUserId ? "Você (Atual)" : "Administrador"}
+                            </p>
+                          </div>
+                        </div>
+                        
+                        {admin.user_id !== currentUserId && (
+                          <Button 
+                            variant="ghost" 
+                            size="icon"
+                            className="text-red-500 hover:text-red-600 hover:bg-red-100/10"
+                            onClick={() => handleRemoverAdmin(admin.user_id)}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>
