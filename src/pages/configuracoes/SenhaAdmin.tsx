@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { MobileTable } from "@/components/ui/mobile-table";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { Lock, Eye, EyeOff, CheckCircle, AlertCircle, Shield, Key, Loader2 } from "lucide-react";
+import { Lock, Eye, EyeOff, CheckCircle, AlertCircle, Shield, Key, Loader2, UserPlus } from "lucide-react";
 
 export function SenhaAdmin() {
   const { toast } = useToast();
@@ -19,6 +19,12 @@ export function SenhaAdmin() {
   const [mostrarNovaSenha, setMostrarNovaSenha] = useState(false);
   const [mostrarConfirmarSenha, setMostrarConfirmarSenha] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  // Novo Admin states
+  const [novoAdminEmail, setNovoAdminEmail] = useState("");
+  const [novoAdminSenha, setNovoAdminSenha] = useState("");
+  const [mostrarNovoAdminSenha, setMostrarNovoAdminSenha] = useState(false);
+  const [isCadastrando, setIsCadastrando] = useState(false);
 
   const verificarForcaSenha = (senha: string) => {
     let pontuacao = 0;
@@ -125,6 +131,53 @@ export function SenhaAdmin() {
     }
   };
 
+  const handleCadastrarAdmin = async () => {
+    if (!novoAdminEmail || !novoAdminSenha) {
+      toast({
+        title: "Campos obrigatórios",
+        description: "Por favor, preencha todos os campos para cadastrar.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const forca = verificarForcaSenha(novoAdminSenha);
+    if (forca.pontuacao < 3) {
+      toast({
+        title: "Senha fraca",
+        description: "A senha do novo administrador deve ser mais forte.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsCadastrando(true);
+    try {
+      const { error } = await supabase.auth.signUp({
+        email: novoAdminEmail,
+        password: novoAdminSenha,
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Administrador cadastrado!",
+        description: "O novo administrador foi cadastrado com sucesso.",
+      });
+
+      setNovoAdminEmail("");
+      setNovoAdminSenha("");
+    } catch (error: any) {
+      toast({
+        title: "Erro ao cadastrar",
+        description: error.message || "Ocorreu um erro ao tentar cadastrar.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsCadastrando(false);
+    }
+  };
+
   const ultimasAlteracoes = [
     { data: "15/01/2024 14:30", usuario: "Admin Principal", ip: "192.168.1.100", status: "Sucesso" },
     { data: "10/01/2024 09:15", usuario: "Admin Principal", ip: "192.168.1.100", status: "Sucesso" },
@@ -174,8 +227,8 @@ export function SenhaAdmin() {
         </div>
 
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-          {/* Alterar Senha */}
-          <div className="xl:col-span-2">
+          {/* Alterar Senha e Novo Admin */}
+          <div className="xl:col-span-2 space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -301,6 +354,69 @@ export function SenhaAdmin() {
                     <>
                       <Lock className="w-4 h-4" />
                       Alterar Senha
+                    </>
+                  )}
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Cadastrar Novo Admin */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <UserPlus className="w-5 h-5" />
+                  Cadastrar Novo Administrador
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="novo-admin-email">E-mail de Acesso *</Label>
+                  <Input
+                    id="novo-admin-email"
+                    type="email"
+                    value={novoAdminEmail}
+                    onChange={(e) => setNovoAdminEmail(e.target.value)}
+                    placeholder="E-mail do novo administrador"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="novo-admin-senha">Senha Inicial *</Label>
+                  <div className="relative">
+                    <Input
+                      id="novo-admin-senha"
+                      type={mostrarNovoAdminSenha ? "text" : "password"}
+                      value={novoAdminSenha}
+                      onChange={(e) => setNovoAdminSenha(e.target.value)}
+                      placeholder="Crie uma senha forte"
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="absolute right-0 top-0 h-full px-3"
+                      onClick={() => setMostrarNovoAdminSenha(!mostrarNovoAdminSenha)}
+                    >
+                      {mostrarNovoAdminSenha ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </Button>
+                  </div>
+                </div>
+
+                <Button 
+                  onClick={handleCadastrarAdmin}
+                  className="w-full gap-2"
+                  variant="secondary"
+                  disabled={!novoAdminEmail || !novoAdminSenha || isCadastrando}
+                >
+                  {isCadastrando ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Cadastrando...
+                    </>
+                  ) : (
+                    <>
+                      <UserPlus className="w-4 h-4" />
+                      Cadastrar Administrador
                     </>
                   )}
                 </Button>
