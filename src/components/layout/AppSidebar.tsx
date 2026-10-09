@@ -52,6 +52,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
+import { useInformacoesClinica } from "@/hooks/useInformacoesClinica";
 
 const cadastroItems = [
   { title: "Dentistas", url: "/cadastros/dentistas", icon: UserCheck },
@@ -102,6 +103,7 @@ export function AppSidebar() {
   const navigate = useNavigate();
   const currentPath = location.pathname;
   const isCollapsed = state === "collapsed";
+  const { informacoes } = useInformacoesClinica();
 
   // Route match helpers for submenu opening
   const cadastroMatch = currentPath.startsWith("/cadastros") || currentPath === "/patients";
@@ -172,8 +174,12 @@ export function AppSidebar() {
           </div>
           {!isCollapsed && (
             <div className="min-w-0 flex-1">
-              <h2 className="text-base sm:text-lg font-semibold text-foreground truncate">Odonto PRO</h2>
-              <p className="text-xs text-muted-foreground truncate">Sistema Odontológico</p>
+              <h2 className="text-base sm:text-lg font-semibold text-foreground truncate">
+                {informacoes?.nome_sistema || "Odonto PRO"}
+              </h2>
+              <p className="text-xs text-muted-foreground truncate">
+                {informacoes?.subtitulo_sistema || "Sistema Odontológico"}
+              </p>
             </div>
           )}
         </div>

@@ -24,6 +24,8 @@ export interface InformacoesClinica {
   seo_title?: string;
   seo_description?: string;
   seo_keywords?: string;
+  nome_sistema?: string;
+  subtitulo_sistema?: string;
   created_at: string;
   updated_at: string;
 }

@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Building2, Save, Plus, Trash2, Clock, Search } from "lucide-react";
+import { Building2, Save, Plus, Trash2, Clock, Search, Monitor } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { useInformacoesClinica } from "@/hooks/useInformacoesClinica";
 import { useHorariosDisponiveis } from "@/hooks/useHorariosDisponiveis";
@@ -52,6 +52,8 @@ export function InformacoesClinica() {
     seo_title: "",
     seo_description: "",
     seo_keywords: "",
+    nome_sistema: "",
+    subtitulo_sistema: "",
   });
 
   const [novoHorario, setNovoHorario] = useState({
@@ -82,6 +84,8 @@ export function InformacoesClinica() {
         seo_title: informacoes.seo_title || "",
         seo_description: informacoes.seo_description || "",
         seo_keywords: informacoes.seo_keywords || "",
+        nome_sistema: informacoes.nome_sistema || "",
+        subtitulo_sistema: informacoes.subtitulo_sistema || "",
       });
     }
   }, [informacoes]);
@@ -458,6 +462,39 @@ export function InformacoesClinica() {
                   rows={4}
                   placeholder="Informações adicionais sobre a clínica..."
                 />
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Marca do Sistema */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Monitor className="h-5 w-5" />
+                Marca do Sistema (Menu Lateral)
+              </CardTitle>
+              <CardDescription>Configure o nome e o subtítulo que aparecem no topo do menu lateral</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="nome_sistema">Nome do Sistema</Label>
+                  <Input
+                    id="nome_sistema"
+                    value={formData.nome_sistema}
+                    onChange={(e) => handleChange("nome_sistema", e.target.value)}
+                    placeholder="Ex: Odonto PRO"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="subtitulo_sistema">Subtítulo</Label>
+                  <Input
+                    id="subtitulo_sistema"
+                    value={formData.subtitulo_sistema}
+                    onChange={(e) => handleChange("subtitulo_sistema", e.target.value)}
+                    placeholder="Ex: Sistema Odontológico"
+                  />
+                </div>
               </div>
             </CardContent>
           </Card>
